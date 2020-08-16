@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Weather Api</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url(images/bg-image.jpg) no-repeat;
+            background-size: cover;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form class="col-md-6 m-auto py-5">
+            <div class="input-group mb-3">
+                <input type="text" id="inputValue" class="form-control " placeholder="Enter a location for Weather ...">
+                <div class="input-group-append">
+                    <button type="button" id="submit" class="btn btn-danger ">Search</button>
+                </div>
+            </div>
+        </form>
+        <div class="weather-status text-white text-center">
+            <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="">
+            <h1 id="cityValue">City</h1>
+            <h3 >
+                <span id="temp"> Temperature </span>°C 
+            </h3>
+            <h1 id="situation" class="lead"> Current Situation </h1>
+        </div>
+    </div>        
+<script>
+
+    let cityValue = document.getElementById("cityValue");
+    let temp = document.getElementById("temp");
+    let situation = document.getElementById("situation")
+    let inputValue = document.getElementById("inputValue");
+    let submit = document.getElementById("submit");
+    
+
+    submit.addEventListener("click", function(){
+        function interCity(){
+            fetch('https://api.openweathermap.org/data/2.5/weather?q='+inputValue.value+'&appid=2c77d0668f469dbddb85dd8c70e963be')
+            .then(res => res.json())
+            .then(data => {
+                cityValue.innerText = data.name;
+                temp.innerText = Math.round(data.main.temp - 273.15);
+                situation.innerText = data.weather[0].main;
+            })
+        }
+
+        interCity()
+
+    })
+
+</script>
+</body>
+
+</html>
